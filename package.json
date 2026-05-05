@@ -1,0 +1,29 @@
+{
+  "name": "reactjs",
+  "version": "1.0.0",
+  "description": "Basics Of ReactJS",
+  "homepage": "https://github.com/Kumar-Suyash/Hello_React#readme",
+  "bugs": {
+    "url": "https://github.com/Kumar-Suyash/Hello_React/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kumar-Suyash/Hello_React.git"
+  },
+  "license": "ISC",
+  "author": "Kumar-Suyash",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "browserlist": [
+    "last 2 versions"
+  ]
+}
