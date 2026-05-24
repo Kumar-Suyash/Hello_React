@@ -1,41 +1,90 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-//* React Element
+/**
+ * Header
+ *  - Logo
+ *  - Nav Items
+ *
+ * Body
+ * - Search Bar
+ * - Restaurant List
+ *  - Restaurant Card
+ *
+ * Footer
+ *  - Copyright
+ *  - Links
+ *  - Address
+ *  - Contact
+ */
 
-//! React Element is a plain JavaScript object that represents a DOM element. It is created using JSX syntax, which allows us to write HTML-like code in our JavaScript files. React elements are immutable and cannot be changed once they are created. They are used to describe what we want to see on the screen and are the building blocks of React applications.
+const Header = () => {
+  return (
+    <div className="header">
+      <div className="logo-container">
+        // Option 1 — Flame / Hot food vibe
+        <img
+          src="https://img.icons8.com/fluency/96/hamburger.png"
+          alt="Namaste Foods"
+        />
+      </div>
 
-//? parentheses are used here to wrap the multiline JSX expression
-//? and make the JSX read as a single JavaScript expression
-const heading = (
-  <h1 id="heading" xyz="abc">
-    Hello world from react through JSX
-  </h1>
-);
-
-const Title = () => {
-  return <h1 id="heading"> Hello world from functional component title</h1>;
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact Us</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  );
 };
 
-//* React Functional Component
-
-//! React Functional Component is a JavaScript function that returns a React element (JSX)
-
-//* Componenet Composition
-
-//! Component composition is the process of combining multiple components to create a new component. It allows us to build complex UIs by breaking them down into smaller, reusable components. In the example below, we have a HeadingComponent that includes both the heading and the Title component. This way, we can reuse the Title component in other parts of our application without having to duplicate code.
-
-const HeadingComponent = () => {
+const RestaurantCard = () => {
   return (
-    <div>
-      <h1 id="heading">Hello world from functional component</h1>
-      <Title />
-      {heading} // we can also use the heading element here, which is a React
-      element created using JSX which is added inside the parantheses
+    <div className="restaurant-card">
+      <img
+        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop"
+        alt="Restaurant"
+      />
+      <h3>Pizza Place</h3>
+      <p>Delicious pizzas with fresh ingredients.</p>
+      <p>Rating: 4.5</p>
+      <p>30-45 mins</p>
+    </div>
+  );
+};
+
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search-container">
+        <input type="text" placeholder="Search for restaurants or dishes" />
+        <button>Search</button>
+      </div>
+      <div className="restaurant-list">
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+      </div>
+    </div>
+  );
+};
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
     </div>
   );
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(heading);
-root.render(<HeadingComponent />);
+root.render(<AppLayout />);
