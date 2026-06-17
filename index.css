@@ -1,251 +1,376 @@
-/* ===== RESET & BASE ===== */
+/* =========================
+   RESET
+========================= */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* ===== DESIGN TOKENS ===== */
+body {
+  background: #0f1115;
+  font-family: "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+/* =========================
+   ROOT VARIABLES
+========================= */
 :root {
-  --bg-base: #0d0d0d;
-  --bg-surface: #161616;
-  --bg-card: #1c1c1c;
-  --bg-input: #222222;
-  --border: #2a2a2a;
-  --border-hover: #3a3a3a;
-  --gold: #e8a838;
-  --gold-muted: #c4892a;
-  --gold-glow: rgba(232, 168, 56, 0.15);
-  --text-primary: #f0ece4;
-  --text-secondary: #8a8480;
-  --text-muted: #555;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --font: "Segoe UI", system-ui, sans-serif;
-  --transition: 0.2s ease;
+  --bg: #0f1115;
+  --surface: #171a21;
+  --surface-hover: #1d222b;
+  --border: #262c36;
+  --primary: #ffb84d;
+  --primary-dark: #e8a638;
+  --text: #ffffff;
+  --text-secondary: #a4adbb;
+  --green: #16c47f;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  --transition: 0.25s ease;
 }
 
-/* ===== HEADER ===== */
+/* =========================
+   APP
+========================= */
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* =========================
+   HEADER
+========================= */
 .header {
+  height: 72px;
+  padding: 0 48px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  height: 64px;
-  background-color: rgba(13, 13, 13, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+
+  backdrop-filter: blur(14px);
+  background: rgba(15, 17, 21, 0.9);
+
+  border-bottom: 1px solid var(--border);
 }
 
-/* ===== LOGO ===== */
+/* Logo */
+
 .logo-container {
-  width: 44px;
-  height: 44px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  flex-shrink: 0;
+  gap: 12px;
 }
 
 .logo-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.logo-container img::before {
-  content: attr(alt);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 44px;
   height: 44px;
-  background-color: var(--bg-card);
-  color: var(--gold);
-  font-size: 10px;
-  font-weight: 600;
-  font-family: var(--font);
-  text-align: center;
-  padding: 4px;
-  letter-spacing: 0.3px;
 }
 
-/* ===== NAV ===== */
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Navigation */
+
 .nav-items ul {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 4px;
-}
-
-.nav-items ul li {
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 450;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
-  transition:
-    color var(--transition),
-    background-color var(--transition);
-  letter-spacing: 0.2px;
-}
-
-.nav-items ul li:hover {
-  color: var(--text-primary);
-  background-color: var(--bg-card);
-}
-
-.nav-items ul li:last-child {
-  color: var(--gold);
-  background-color: var(--gold-glow);
-  border: 1px solid rgba(232, 168, 56, 0.2);
-}
-
-.nav-items ul li:last-child:hover {
-  background-color: rgba(232, 168, 56, 0.22);
-  color: var(--gold);
-}
-
-/* ===== BODY ===== */
-.body {
-  background-color: var(--bg-base);
-  min-height: 100vh;
-  padding: 48px 48px;
-  font-family: var(--font);
-}
-
-/* ===== SEARCH ===== */
-.search-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
-  margin-bottom: 48px;
-  max-width: 560px;
-  margin-inline: auto;
-  margin-bottom: 48px;
+}
+
+.nav-items li {
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  color: var(--text-secondary);
+
+  transition: var(--transition);
+}
+
+.nav-items li:hover {
+  background: var(--surface);
+  color: white;
+}
+
+.nav-items li:last-child {
+  color: var(--primary);
+  border: 1px solid rgba(255, 184, 77, 0.25);
+  background: rgba(255, 184, 77, 0.08);
+}
+
+/* =========================
+   BODY
+========================= */
+.body {
+  padding: 40px;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+.search-container {
+  max-width: 650px;
+  margin: 0 auto 50px;
+
+  display: flex;
+  gap: 12px;
 }
 
 .search-container input {
   flex: 1;
-  padding: 13px 18px;
-  background-color: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-family: var(--font);
-  font-size: 14px;
-  outline: none;
-  transition:
-    border-color var(--transition),
-    background-color var(--transition);
-}
 
-.search-container input::placeholder {
-  color: var(--text-muted);
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+
+  border: 1px solid var(--border);
+  background: var(--surface);
+
+  color: white;
+  font-size: 15px;
+
+  outline: none;
+  transition: var(--transition);
 }
 
 .search-container input:focus {
-  border-color: var(--gold);
-  background-color: #252525;
+  border-color: var(--primary);
 }
 
 .search-container button {
-  padding: 13px 22px;
-  background-color: var(--gold);
-  color: #0d0d0d;
   border: none;
+  padding: 14px 22px;
+
   border-radius: var(--radius-md);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 600;
+
+  background: var(--primary);
+  color: #111;
+
+  font-weight: 700;
   cursor: pointer;
-  white-space: nowrap;
-  transition:
-    background-color var(--transition),
-    transform var(--transition);
+
+  transition: var(--transition);
 }
 
 .search-container button:hover {
-  background-color: #f0b840;
+  background: var(--primary-dark);
 }
 
-.search-container button:active {
-  transform: scale(0.97);
-}
-
-/* ===== RESTAURANT LIST ===== */
+/* =========================
+   RESTAURANT GRID
+========================= */
 .restaurant-list {
+  max-width: 1400px;
+  margin: auto;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin-inline: auto;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+  gap: 24px;
 }
 
-/* ===== RESTAURANT CARD ===== */
+/* =========================
+   CARD
+========================= */
 .restaurant-card {
-  background-color: var(--bg-card);
+  position: relative;
+
+  background: var(--surface);
   border: 1px solid var(--border);
+
   border-radius: var(--radius-lg);
   overflow: hidden;
+
+  transition: var(--transition);
   cursor: pointer;
-  transition:
-    border-color var(--transition),
-    transform var(--transition);
 }
 
 .restaurant-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
+  transform: translateY(-6px);
+  background: var(--surface-hover);
+  border-color: #343c4a;
 }
 
-.restaurant-card img {
+/* =========================
+   DISCOUNT BADGE
+========================= */
+.discount-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 12px;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+
+  border-radius: 10px;
+}
+
+.discount-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.discount-sub {
+  font-size: 11px;
+  color: var(--primary);
+}
+
+/* =========================
+   IMAGE
+========================= */
+.card-img-wrapper {
+  position: relative;
+}
+
+.card-img {
   width: 100%;
-  height: 160px;
+  height: 200px;
   object-fit: cover;
-  display: block;
-  border-bottom: 1px solid var(--border);
 }
 
-.restaurant-card h3 {
-  font-size: 15px;
+/* =========================
+   VEG BADGE
+========================= */
+.veg-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+
+  background: rgba(22, 196, 127, 0.95);
+
+  color: white;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-primary);
-  padding: 14px 16px 4px;
-  letter-spacing: 0.1px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
 }
 
-.restaurant-card p {
+/* =========================
+   CARD BODY
+========================= */
+.card-body {
+  padding: 16px;
+}
+
+.card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+
+  margin-bottom: 8px;
+}
+
+.card-cuisines {
   font-size: 13px;
   color: var(--text-secondary);
-  padding: 0 16px 10px;
+
   line-height: 1.5;
+
+  margin-bottom: 14px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
 }
 
-.restaurant-card p:last-child {
+/* =========================
+   META INFO
+========================= */
+.card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+.card-rating {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.card-time,
+.card-cost {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.card-dot {
+  color: #4a5565;
+}
+
+/* =========================
+   LOCATION
+========================= */
+.card-location {
+  font-size: 13px;
+  color: var(--primary);
+
+  background: rgba(255, 184, 77, 0.08);
+
+  border: 1px solid rgba(255, 184, 77, 0.15);
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin: 0 16px 14px;
-  padding: 4px 10px;
-  background-color: var(--gold-glow);
-  color: var(--gold);
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 999px;
-  border: 1px solid rgba(232, 168, 56, 0.2);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 20px;
+  }
+
+  .body {
+    padding: 24px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .restaurant-list {
+    grid-template-columns: 1fr;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-container button {
+    width: 100%;
+  }
 }
