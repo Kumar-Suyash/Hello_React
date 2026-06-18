@@ -346,6 +346,40 @@ body {
   align-items: center;
   gap: 4px;
 }
+/* =========================
+   FILTER BUTTON
+========================= */
+.filter-btn {
+  max-width: 1400px;
+  margin: 0 auto 24px;
+  display: flex;
+}
+
+.filter-btn button {
+  border: 1px solid rgba(255, 184, 77, 0.25);
+  padding: 12px 22px;
+
+  border-radius: var(--radius-md);
+
+  background: rgba(255, 184, 77, 0.08);
+  color: var(--primary);
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.filter-btn button:hover {
+  background: rgba(255, 184, 77, 0.18);
+  border-color: rgba(255, 184, 77, 0.5);
+  color: #fff;
+}
+
+.filter-btn button:active {
+  transform: scale(0.97);
+}
 
 /* =========================
    RESPONSIVE
@@ -373,5 +407,13 @@ body {
 
   .search-container button {
     width: 100%;
+  }
+  .filter-btn {
+    margin: 0 0 24px;
+  }
+
+  .filter-btn button {
+    width: 100%;
+    text-align: center;
   }
 }
