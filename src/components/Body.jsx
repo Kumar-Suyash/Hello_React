@@ -1,13 +1,40 @@
 import React from "react";
 import RestaurantCard from "./RestaurantCard";
-import { resList } from "../utils/mockData";
+import Shimmer from "./Shimmer";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Body = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  //* milliseconds to keep the shimmer visible
+  const SIMULATED_DELAY_MS = 1500;
 
-  return (
+  //* Local State variable to hold the list of restaurants
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(
+      "https://namastedev.com/api/v1/listRestaurants",
+    );
+    const json = await response.json();
+
+    const restaurants =
+      json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || [];
+
+    //* artificial delay so shimmer is visible during development
+    await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
+
+    setListOfRestaurants(restaurants);
+  };
+
+  //* Conditional rendering based on the state of listOfRestaurants
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="search-container">
         <input type="text" placeholder="Search for restaurants or dishes" />
