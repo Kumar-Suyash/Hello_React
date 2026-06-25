@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   //* milliseconds to keep the shimmer visible
@@ -32,7 +33,6 @@ const Body = () => {
 
     //* artificial delay so shimmer is visible during development
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
-
     setListOfRestaurants(restaurants);
   };
 
@@ -64,31 +64,29 @@ const Body = () => {
       <div
         className="filter-btn"
         onClick={() => {
-          const filteredlist = listOfRestaurants.filter(
+          const filteredList = listOfRestaurants.filter(
             (restaurant) => restaurant.info.avgRating > 4.5,
           );
-          setFilteredRestaurants(filteredlist);
+          setFilteredRestaurants(filteredList);
         }}
       >
-        <button>Top Rated Resturants</button>
+        <button>Top Rated Restaurants</button>
       </div>
 
       <div className="restaurant-list">
-        {filteredRestaurants.length > 0
-          ? filteredRestaurants.map((restaurant) => (
-              // key must be unique — using the API's own id field
-              <RestaurantCard
-                key={restaurant.info.id}
-                resData={restaurant.info}
-              />
-            ))
-          : listOfRestaurants.map((restaurant) => (
-              // key must be unique — using the API's own id field
-              <RestaurantCard
-                key={restaurant.info.id}
-                resData={restaurant.info}
-              />
-            ))}
+        {(filteredRestaurants.length > 0
+          ? filteredRestaurants
+          : listOfRestaurants
+        ).map((restaurant) => (
+          // ← Link wraps the card, id goes into the URL
+          <Link
+            key={restaurant.info.id}
+            to={`/restaurant/${restaurant.info.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <RestaurantCard resData={restaurant.info} />
+          </Link>
+        ))}
       </div>
     </div>
   );
