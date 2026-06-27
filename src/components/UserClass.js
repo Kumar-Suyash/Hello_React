@@ -5,16 +5,31 @@ class UserClass extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      count2: 2,
     };
+    console.log("Child Constructor");
+  }
+
+  componentDidMount() {
+    console.log("Child Component Did Mount");
   }
 
   render() {
+    console.log("Child Render");
     const { name, location } = this.props;
+    const { count } = this.state;
     return (
       <div className="user-card">
-        <h2>Count: {this.state.count}</h2>
-        <h2>Count2: {this.state.count2}</h2>
+        <h2>Count: {count}</h2>
+        <button
+          onClick={() => {
+            //* NEVER mutate the state directly, always use setState to update the state.
+            this.setState({
+              count: this.state.count + 1,
+            });
+          }}
+        >
+          Increment
+        </button>
         <h1>Name: {name}</h1>
         <p>Location: {location}</p>
         <h4>Contact: @Ksuyash001</h4>
