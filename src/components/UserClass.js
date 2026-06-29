@@ -4,32 +4,40 @@ class UserClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      userInfo: {
+        name: "Dummy Name",
+        location: "Dummy Location",
+        avatar_url: "Dummy Avatar",
+      },
     };
-    console.log("Child Constructor");
+    console.log(this.props.state, "Child Constructor");
   }
 
-  componentDidMount() {
-    console.log("Child Component Did Mount");
+  async componentDidMount() {
+    console.log(this.props.state, "Child Component Did Mount");
+    //* Api call
+    const data = await fetch("https://api.github.com/users/Kumar-Suyash");
+    const json = await data.json();
+    console.log(json);
+    this.setState({
+      userInfo: json,
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props.state, "Child Component Did Update");
+  }
+
+  componentWillUnmount() {
+    console.log(this.props.state, "Child Component Will Unmount");
   }
 
   render() {
-    console.log("Child Render");
-    const { name, location } = this.props;
-    const { count } = this.state;
+    console.log(this.props.state, "Child Render");
+    const { name, location, avatar_url } = this.state.userInfo;
     return (
       <div className="user-card">
-        <h2>Count: {count}</h2>
-        <button
-          onClick={() => {
-            //* NEVER mutate the state directly, always use setState to update the state.
-            this.setState({
-              count: this.state.count + 1,
-            });
-          }}
-        >
-          Increment
-        </button>
+        <img src={avatar_url} alt="User Avatar" />
         <h1>Name: {name}</h1>
         <p>Location: {location}</p>
         <h4>Contact: @Ksuyash001</h4>
@@ -38,3 +46,14 @@ class UserClass extends React.Component {
   }
 }
 export default UserClass;
+
+/**
+ * ? Lifecycle of Class Component
+ *
+ * child Constructor called
+ * child Render called
+ * child Component Did Mount called
+ * child Render called
+ * child Component Did Update called
+ * Child Component Will Unmount
+ */
