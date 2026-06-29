@@ -14,11 +14,16 @@ class UserClass extends React.Component {
   }
 
   async componentDidMount() {
+    //* writing code for more understanding of componenetWillUnmount
+    this.timer = setInterval(() => {
+      console.log("Namaste React OP");
+    }, 1000);
+
     console.log(this.props.state, "Child Component Did Mount");
     //* Api call
     const data = await fetch("https://api.github.com/users/Kumar-Suyash");
     const json = await data.json();
-    console.log(json);
+    // console.log(json);
     this.setState({
       userInfo: json,
     });
@@ -29,6 +34,7 @@ class UserClass extends React.Component {
   }
 
   componentWillUnmount() {
+    clearInterval(this.timer);
     console.log(this.props.state, "Child Component Will Unmount");
   }
 
