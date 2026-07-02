@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // ← add this
+import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
+import useResturantMenu from "../utils/useResturantMenu";
 import {
   MENU_ITEM_IMAGES,
   MENU_RESTAURANT_IMAGES,
@@ -8,21 +8,9 @@ import {
 } from "../utils/constants";
 
 const RestaurantMenu = () => {
-  const { resId } = useParams(); // ← reads :resId from the URL
-  const [resInfo, setResInfo] = useState(null);
+  const { resId } = useParams(); //* ← reads :resId from the URL
 
-  useEffect(() => {
-    fetchMenu();
-  }, [resId]); // ← re-fetch if resId changes
-
-  const fetchMenu = async () => {
-    const response = await fetch(
-      `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`,
-    );
-    const json = await response.json();
-    console.log("Menu Data:", json);
-    setResInfo(json.data);
-  };
+  const resInfo = useResturantMenu(resId);
 
   if (resInfo === null) return <Shimmer />;
 
