@@ -6,7 +6,10 @@ const useResturantMenu = (resId) => {
   useEffect(() => {
     const fetchMenu = async () => {
       const response = await fetch(
-        `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`,
+        "https://corsproxy.io/?" +
+          encodeURIComponent(
+            `https://namastedev.com/api/v1/listRestaurantMenu/${resId}`,
+          ),
       );
       const json = await response.json();
       console.log("Menu Data:", json);
