@@ -1,10 +1,12 @@
 import React from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+
+const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
 
 const Body = () => {
   //* milliseconds to keep the shimmer visible
@@ -32,7 +34,6 @@ const Body = () => {
     const restaurants =
       json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || [];
-
     //* artificial delay so shimmer is visible during development
     await new Promise((res) => setTimeout(res, SIMULATED_DELAY_MS));
     setListOfRestaurants(restaurants);
@@ -91,13 +92,16 @@ const Body = () => {
           ? filteredRestaurants
           : listOfRestaurants
         ).map((restaurant) => (
-          // ← Link wraps the card, id goes into the URL
-          <Link
+          <Link // ← Link wraps the card, id goes into the URL
             key={restaurant.info.id}
             to={`/restaurant/${restaurant.info.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <RestaurantCard resData={restaurant.info} />
+            {restaurant?.info?.aggregatedDiscountInfoV3 ? (
+              <PromotedRestaurantCard resData={restaurant.info} />
+            ) : (
+              <RestaurantCard resData={restaurant.info} />
+            )}
           </Link>
         ))}
       </div>

@@ -1,14 +1,13 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
+import RestaurantCategory from "./RestaurantCategory";
 import useResturantMenu from "../utils/useResturantMenu";
-import {
-  MENU_ITEM_IMAGES,
-  MENU_RESTAURANT_IMAGES,
-  FALLBACK_MENU_IMG,
-} from "../utils/constants";
+import { MENU_RESTAURANT_IMAGES, FALLBACK_MENU_IMG } from "../utils/constants";
 
 const RestaurantMenu = () => {
   const { resId } = useParams(); //* ← reads :resId from the URL
+  const [openIndex, setOpenIndex] = useState(0);
 
   const resInfo = useResturantMenu(resId);
 
@@ -29,8 +28,6 @@ const RestaurantMenu = () => {
         c?.card?.card?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory",
     ) || [];
-  //*
-  console.log("Menu Categories:", menuCategories);
 
   return (
     <div className="menu">
@@ -47,30 +44,22 @@ const RestaurantMenu = () => {
 
       <h2 className="menu-heading">Menu</h2>
 
-      {menuCategories.map((category) => {
-        const { title, itemCards } = category.card.card;
+      {menuCategories.map((category, index) => {
+        const categoryData = category.card.card;
         return (
-          <div key={title} className="menu-category">
-            <h3 className="category-title">{title}</h3>
-            <ul className="item-list">
-              {itemCards.map(({ card }) => {
-                const { id, name, description, price, defaultPrice } =
-                  card.info;
-                const displayPrice = (price || defaultPrice) / 100;
-                const imgSrc = MENU_ITEM_IMAGES[id] || FALLBACK_MENU_IMG;
-                return (
-                  <li key={id} className="menu-item">
-                    <div className="item-details">
-                      <h4 className="item-name">{name}</h4>
-                      <p className="item-description">{description}</p>
-                      <span className="item-price">₹{displayPrice}</span>
-                    </div>
-                    <img className="item-img" src={imgSrc} alt={name} />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          //* Controlled component pattern: The parent component (RestaurantMenu) manages the state of which category is open, and passes down the state and a toggle function to the child component (RestaurantCategory).
+
+          //* lifting state up: The open/closed state of each category is managed in the parent component (RestaurantMenu) instead of within each RestaurantCategory component. This allows for better control and coordination between categories, such as ensuring only one category is open at a time.
+          <RestaurantCategory
+            key={categoryData.title}
+            category={categoryData}
+            isOpen={index === openIndex}
+            onToggle={() =>
+              setOpenIndex((currentOpenIndex) =>
+                currentOpenIndex === index ? null : index,
+              )
+            }
+          />
         );
       })}
     </div>

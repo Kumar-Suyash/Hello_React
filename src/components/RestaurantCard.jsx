@@ -13,25 +13,12 @@ const RestaurantCard = ({ resData }) => {
     locality,
     areaName,
     veg,
-    aggregatedDiscountInfoV3,
   } = resData;
 
   const imgSrc = RESTAURANT_IMAGES[id] ?? FALLBACK_IMG;
 
   return (
     <div className="restaurant-card">
-      {/* Discount badge — only renders if the data exists */}
-      {aggregatedDiscountInfoV3 && (
-        <div className="discount-badge">
-          <span className="discount-header">
-            {aggregatedDiscountInfoV3.header}
-          </span>
-          <span className="discount-sub">
-            {aggregatedDiscountInfoV3.subHeader}
-          </span>
-        </div>
-      )}
-
       <div className="card-img-wrapper">
         <img src={imgSrc} alt={name} className="card-img" />
         {veg && <span className="veg-badge">🟢 Pure Veg</span>}
@@ -55,6 +42,26 @@ const RestaurantCard = ({ resData }) => {
       </div>
     </div>
   );
+};
+
+//* Higher Order Component to add promoted/discount label
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    const { resData } = props;
+    const info = resData?.aggregatedDiscountInfoV3 || null;
+
+    return (
+      <div className="promoted-wrapper">
+        {info?.header || info?.subHeader ? (
+          <div className="discount-badge">
+            <span className="discount-header">{info.header}</span>
+            <span className="discount-sub">{info.subHeader}</span>
+          </div>
+        ) : null}
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
 };
 
 export default RestaurantCard;
