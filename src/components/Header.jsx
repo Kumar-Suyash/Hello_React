@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import U from "../utils/UserContext";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
