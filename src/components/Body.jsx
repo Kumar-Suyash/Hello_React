@@ -26,8 +26,7 @@ const Body = () => {
 
   const fetchData = async () => {
     const response = await fetch(
-      "https://corsproxy.io/?" +
-        encodeURIComponent("https://namastedev.com/api/v1/listRestaurants"),
+      "https://namastedev.com/api/v1/listRestaurants",
     );
     const json = await response.json();
 
