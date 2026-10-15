@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 //* behind the scenes, react itself using a single state object to manage all the states in the component.
 
 const User = ({ name, location }) => {
-  const { count, setCount } = useState(0);
-  const { count2 } = useState(1);
+  const [count, setCount] = useState(0);
+  const [count2] = useState(1);
 
   /*
    * Interview points: useEffect(async () => {}, []) not allowed

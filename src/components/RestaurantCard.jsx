@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const RestaurantCard = ({ resData }) => {
+  const { loggedInUser } = useContext(UserContext);
   // Destructure everything needed directly from resData
   const {
     id,
@@ -37,7 +39,7 @@ const RestaurantCard = ({ resData }) => {
         </div>
 
         <p className="card-location">
-          📍 {locality}, {areaName}
+          📍 {locality}, {areaName}, {loggedInUser}
         </p>
       </div>
     </div>

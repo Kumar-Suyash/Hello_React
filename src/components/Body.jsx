@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { RESTAURANT_IMAGES, FALLBACK_IMG } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
 
 const Body = () => {
+  const { loggedInUser, setUserName } = useContext(UserContext);
   //* milliseconds to keep the shimmer visible
   const SIMULATED_DELAY_MS = 1500;
 
@@ -73,6 +75,11 @@ const Body = () => {
         >
           Search
         </button>
+        <input
+          type="text"
+          value={loggedInUser}
+          onChange={(e) => setUserName(e.target.value)}
+        />
       </div>
       <div
         className="filter-btn"
