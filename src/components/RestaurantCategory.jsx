@@ -23,7 +23,7 @@ const RestaurantCategory = ({ category, isOpen, onToggle }) => {
 
       <div className={`category-content ${isOpen ? "open" : ""}`}>
         {itemsCount > 0 ? (
-          <ItemList itemCards={itemCards} />
+          <ItemList items={itemCards.map(({ card }) => card.info)} />
         ) : (
           <p className="empty-category">No items available in this category.</p>
         )}
