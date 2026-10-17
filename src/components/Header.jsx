@@ -1,13 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+// import { useContext } from "react"; //* UserContext demo
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContext";
+// import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
-  const { loggedInUser } = useContext(UserContext);
-  console.log("loggedInUser:", loggedInUser);
+  //* UserContext demo
+  // const { loggedInUser } = useContext(UserContext);
+  // console.log("loggedInUser:", loggedInUser);
   const isOnline = useOnlineStatus();
 
   //*Subscribing to the store using a Selector
@@ -77,7 +80,10 @@ const Header = () => {
               Cart
             </Link>
           </li>
-          <li> {loggedInUser} </li>
+          <li>
+            <ThemeSwitcher />
+          </li>
+          {/* <li> {loggedInUser} </li> */}
           <button
             className="login-btn"
             onClick={() => setBtnName(btnName === "Login" ? "Logout" : "Login")}

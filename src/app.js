@@ -1,4 +1,5 @@
-import React, { lazy, Suspense, useContext, useEffect, useState } from "react";
+import React, { lazy, Suspense } from "react";
+// import { useContext, useEffect, useState } from "react"; //* only used by the UserContext demo below
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -9,7 +10,7 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
-import UserContext from "./utils/UserContext";
+// import UserContext from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
@@ -27,26 +28,28 @@ const Grocery = lazy(() => import("./components/Grocery"));
 const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
-  const [userName, setUserName] = useState();
+  //* UserContext demo (createContext + useContext) - learning step before the Redux store, kept as notes
+  // const [userName, setUserName] = useState();
+  //
+  // //* authentication
+  // useEffect(() => {
+  //   //* here we make an API call and send username and password
+  //   const data = {
+  //     name: "Suyash",
+  //   };
+  //   setUserName(data.name);
+  // }, []);
+  //
+  // const { loggedInUser } = useContext(UserContext);
 
-  //* authentication
-  useEffect(() => {
-    //* here we make an API call and send username and password
-    const data = {
-      name: "Suyash",
-    };
-    setUserName(data.name);
-  }, []);
-
-  const { loggedInUser } = useContext(UserContext);
   return (
     <Provider store={appStore}>
-      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        <div className="app">
-          <Header />
-          <Outlet />
-        </div>
-      </UserContext.Provider>
+      {/* <UserContext.Provider value={{ loggedInUser: userName, setUserName }}> */}
+      <div className="app">
+        <Header />
+        <Outlet />
+      </div>
+      {/* </UserContext.Provider> */}
     </Provider>
   );
 };

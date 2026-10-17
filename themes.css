@@ -1,0 +1,255 @@
+/* =========================================================
+   THEMES
+   ThemeSwitcher.jsx puts the chosen theme on <html data-theme="...">
+   - default -> nothing in this file, index.css is used as it is
+   - zomato  -> section 2 (+ 4, 5)
+   - swiggy  -> section 3 (+ 4, 5)
+========================================================= */
+
+/* =========================
+   1. TAILWIND (without Preflight)
+   Preflight is Tailwind's CSS reset. We skip it, so Tailwind
+   can't change any style already written in index.css.
+
+   Utilities are NOT put in a layer on purpose: index.css starts
+   with * { margin: 0; padding: 0 } outside any layer, and
+   un-layered rules beat layered ones, so a layered p-2 or mt-3
+   would always lose. Un-layered, .p-2 beats * by specificity.
+   Rule: don't put Tailwind classes and index.css classes on the
+   same element.
+========================= */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+
+/* Tailwind colour names that point at our CSS variables.
+   "inline" = the utility uses var(--primary) directly, so
+   bg-primary, border-line, text-main... change with the theme. */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  /* text on a primary background; default theme has no --on-primary, so #111 like index.css */
+  --color-on-primary: var(--on-primary, #111);
+  --color-surface: var(--surface);
+  --color-line: var(--border);
+  --color-main: var(--text);
+  --color-muted: var(--text-secondary);
+}
+
+/* =========================
+   2. ZOMATO THEME
+   Same variable names as :root in index.css, new values.
+   :root[data-theme] is more specific than :root, so it wins.
+========================= */
+:root[data-theme="zomato"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #ffffff;
+  --surface-strong: #f8f8f8;
+  --surface-muted: #f4f4f2;
+  --border: #e8e8e8;
+  --primary: #e23744;
+  --primary-dark: #cb202d;
+  --text: #1c1c1c;
+  --text-secondary: #696969;
+  --green: #24963f;
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* extra variables used in section 4 */
+  --on-primary: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --primary-soft: rgba(226, 55, 68, 0.08);
+  --primary-soft-hover: rgba(226, 55, 68, 0.14);
+  --primary-soft-border: rgba(226, 55, 68, 0.3);
+  --card-shadow: 0 8px 24px rgba(28, 28, 28, 0.12);
+}
+
+/* =========================
+   3. SWIGGY THEME
+========================= */
+:root[data-theme="swiggy"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #f0f0f5;
+  --surface-strong: #f0f0f5;
+  --surface-muted: #f0f0f5;
+  --border: #e9e9eb;
+  --primary: #fc8019;
+  --primary-dark: #e46f0a;
+  --text: #282c3f;
+  --text-secondary: #686b78;
+  --green: #1ba672;
+
+  --radius-sm: 12px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* extra variables used in section 4 */
+  --on-primary: #ffffff;
+  --header-bg: #ffffff;
+  --primary-soft: rgba(252, 128, 25, 0.1);
+  --primary-soft-hover: rgba(252, 128, 25, 0.18);
+  --primary-soft-border: rgba(252, 128, 25, 0.35);
+  --card-shadow: 0 8px 24px rgba(40, 44, 63, 0.12);
+}
+
+/* =========================
+   4. FIXES FOR BOTH LIGHT THEMES
+   A few rules in index.css use fixed dark-theme colours
+   (#fff, #111, rgba(255, 184, 77, ...)) instead of variables.
+   Changing variables can't reach them, so we point them at
+   variables here. :is(a, b) means "zomato OR swiggy".
+========================= */
+:root:is([data-theme="zomato"], [data-theme="swiggy"]) {
+  color-scheme: light; /* native controls (select, scrollbar) in light mode */
+
+  & body {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  & .header {
+    background: var(--header-bg);
+  }
+
+  & .nav-items li:hover,
+  & .search-container input {
+    color: var(--text);
+  }
+
+  /* text on a primary-coloured background */
+  & .search-container button,
+  & .login-btn,
+  & .cart-badge,
+  & .cart-empty-btn {
+    color: var(--on-primary);
+  }
+
+  & .restaurant-card:hover {
+    border-color: var(--border);
+    box-shadow: var(--card-shadow);
+  }
+
+  & .card-rating {
+    color: var(--green);
+  }
+
+  & .card-location,
+  & .filter-btn button {
+    background: var(--primary-soft);
+    border-color: var(--primary-soft-border);
+  }
+
+  & .filter-btn button:hover {
+    background: var(--primary-soft-hover);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  & .user-card {
+    border: 1px solid var(--border);
+  }
+
+  & .add-btn,
+  & .qty-stepper {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* shimmer used white-on-dark, make it grey-on-white */
+  & .shimmer-card {
+    background: var(--surface);
+    --skeleton: rgba(0, 0, 0, 0.06);
+  }
+
+  & .shimmer-card::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent
+    );
+  }
+}
+
+/* =========================
+   5. BRAND TOUCHES
+   Comes after section 4 so these win when both match.
+========================= */
+
+/* Zomato: cards get a border + shadow only on hover,
+   rating is a green pill with white text */
+:root[data-theme="zomato"] {
+  & .restaurant-card {
+    border-color: transparent;
+  }
+
+  & .card-rating {
+    background: var(--green);
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+}
+
+/* Swiggy: no card box at all, rounded image,
+   card shrinks a little on hover */
+:root[data-theme="swiggy"] {
+  & .header {
+    border-bottom-color: transparent;
+    box-shadow: 0 15px 40px -20px rgba(40, 44, 63, 0.15);
+  }
+
+  & .restaurant-card,
+  & .restaurant-card:hover {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  & .restaurant-card:hover {
+    transform: scale(0.95);
+  }
+
+  & .card-img {
+    border-radius: 16px;
+  }
+
+  & .card-body {
+    padding: 12px 4px;
+  }
+
+  & .card-rating {
+    font-weight: 700;
+  }
+}
+
+/* =========================
+   6. THEME SWITCHER
+========================= */
+/* its <li> in the header shouldn't get the nav padding / hover box
+   :has(> .theme-switcher) = "an li that directly contains the switcher" */
+.nav-items li:has(> .theme-switcher),
+.nav-items li:has(> .theme-switcher):hover {
+  padding: 0;
+  background: none;
+}
+
+/* =========================
+   7. VIEW TRANSITIONS (theme switch + Top Rated filter)
+========================= */
+/* one speed for every animated part: the page cross-fade and each card */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.35s;
+}
+
+/* during a transition, named elements are drawn on top of the page.
+   Naming the sticky header too keeps it above the moving cards. */
+.header {
+  view-transition-name: site-header;
+}
