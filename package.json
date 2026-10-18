@@ -19,7 +19,13 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "^8.0.7",
+    "@babel/preset-env": "^8.0.7",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
     "autoprefixer": "^10.5.2",
+    "babel-jest": "^30.5.2",
+    "jest": "^30.5.2",
     "parcel": "^2.16.4"
   },
   "dependencies": {
